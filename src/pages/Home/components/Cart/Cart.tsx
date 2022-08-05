@@ -75,7 +75,6 @@ export const Cart: FC<ICart> = ({
   const cartTotalXp = useMemo(() => pokemonCartList.reduce<number>((totalXp, currenPokemon) => {
     if (currenPokemon?.quantity) {
       const total = totalXp + (currenPokemon.base_experience * currenPokemon.quantity)
-      console.log(total)
       return total
     }
     return 0
