@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.centralizer {
+  width: 900px;
+  max-width: 95vw;
+  margin: 0 auto;
+}
