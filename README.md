@@ -1,4 +1,4 @@
-<h1 style="display: flex; gap: 10px; font-size: 30px">
+<h1 style="display: flex; align-items: cente; gap: 10px; font-size: 30px">
     <img src="./public/pokemon-icon.png" style="width: 40px">
     Loja-Pokemon
 </h1>
