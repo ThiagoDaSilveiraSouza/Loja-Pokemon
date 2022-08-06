@@ -1,7 +1,7 @@
-<div style="display: flex; align-items: center; gap: 10px; border-bottom: 0.5px solid gray;">
+<h1 style="display: flex; gap: 10px; font-size: 30px">
     <img src="./public/pokemon-icon.png" style="width: 40px">
-    <span style="font-size: 30px">Loja-Pokemon</span>
-</div>
+    Loja-Pokemon
+</h1>
 
 Decidi optar por focar na implementação nas funcionalidades, estrutura de projeto e acabei não priorizando o layout. Acredito que todas as funcionalidades solicitadas foram atendidas:
 
