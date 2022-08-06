@@ -4,10 +4,18 @@ import { ImSearch } from "react-icons/im";
 
 // img
 // @ts-ignore
-import PokemonCenterIcon from "../../../../assets/img/pokemon-center.icns"
+import PokemonCenterIcon from "../../../../assets/img/pokemon-center.icns";
 
-const Header = styled.header`
+const FakeHeader = styled.div`
   height: 80px;
+`;
+const Header = styled.header`
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 3px 0 gray;
   background: #c4c4c4;
   > .centralizer {
     display: flex;
@@ -21,7 +29,7 @@ const InputContanier = styled.div`
   align-items: center;
   gap: 10px;
   height: 100%;
-`
+`;
 
 const Input = styled.input`
   height: 40px;
@@ -41,36 +49,44 @@ const PokemonCenterButton = styled.button`
   outline: none;
   background: transparent;
   cursor: pointer;
-  img{
+  img {
     height: 100%;
     border-radius: 100%;
-    :hover{
+    :hover {
       transform: scale(1.05);
     }
   }
-`
+`;
 
 interface ISearchHeader {
   searchFunction: (inputValue: string) => void;
-  buttonFunction?: () => void
+  buttonFunction?: () => void;
 }
 
-export const SearchHeader: FC<ISearchHeader> = ({ searchFunction, buttonFunction }) => {
+export const SearchHeader: FC<ISearchHeader> = ({
+  searchFunction,
+  buttonFunction,
+}) => {
   const userInputTypeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     searchFunction(value.toLowerCase());
+    console.log(value);
   };
+
   return (
-    <Header>
-      <div className="centralizer">
-        <InputContanier>
-          <ImSearch size="40px" />
-          <Input placeholder="pesquisar" onChange={userInputTypeHandler} />
-        </InputContanier>
-        <PokemonCenterButton onClick={buttonFunction}>
-          <img src={PokemonCenterIcon} alt="pokemon-center" />
-        </PokemonCenterButton>
-      </div>
-    </Header>
+    <>
+      <FakeHeader />
+      <Header>
+        <div className="centralizer">
+          <InputContanier>
+            <ImSearch size="40px" />
+            <Input placeholder="pesquisar" onChange={userInputTypeHandler} />
+          </InputContanier>
+          <PokemonCenterButton onClick={buttonFunction}>
+            <img src={PokemonCenterIcon} alt="pokemon-center" />
+          </PokemonCenterButton>
+        </div>
+      </Header>
+    </>
   );
 };
