@@ -1,5 +1,5 @@
-import { ChangeEvent, FC } from "react";
-import styled from "styled-components";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { ImSearch } from "react-icons/im";
 
 // img
@@ -25,6 +25,7 @@ const Header = styled.header`
 `;
 
 const InputContanier = styled.div`
+  flex: 1 1;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -32,6 +33,7 @@ const InputContanier = styled.div`
 `;
 
 const Input = styled.input`
+  flex: 1 1 auto;
   height: 40px;
   font-size: 40px;
   border: none;
@@ -42,7 +44,24 @@ const Input = styled.input`
   }
 `;
 
-const PokemonCenterButton = styled.button`
+interface IPokemonCenterButton {
+  countAnimation: boolean;
+}
+
+const nodding = keyframes`
+  0% {
+    transform: translateY(-20%);
+  }
+  50% {
+    transform: translateY(20%);
+  }
+  100%{
+    transform: translateY(0);
+  }
+`;
+
+const PokemonCenterButton = styled.button<IPokemonCenterButton>`
+  position: relative;
   display: flex;
   padding: 10px;
   border: none;
@@ -56,22 +75,54 @@ const PokemonCenterButton = styled.button`
       transform: scale(1.05);
     }
   }
+  strong {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    color: red;
+    background: white;
+    border: 3px solid black;
+    border-radius: 100%;
+    box-sizing: border-box;
+    /* animation: ${({ countAnimation }) =>
+      countAnimation ? "nodding" : "none"}; */
+    animation: ${({ countAnimation }) => (countAnimation ? nodding : "none")}
+      0.3s linear;
+  }
 `;
 
 interface ISearchHeader {
   searchFunction: (inputValue: string) => void;
   buttonFunction?: () => void;
+  cartItemQuantity: number;
 }
 
 export const SearchHeader: FC<ISearchHeader> = ({
   searchFunction,
   buttonFunction,
+  cartItemQuantity,
 }) => {
+  const [countAnimation, setCountAnimation] = useState(false);
   const userInputTypeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     searchFunction(value.toLowerCase());
-    console.log(value);
   };
+
+  const ativateCountAnimation = useCallback(() => {
+    setCountAnimation(true);
+    setTimeout(() => {
+      setCountAnimation(false);
+    }, 500);
+  }, [countAnimation]);
+
+  useEffect(() => {
+    ativateCountAnimation();
+  }, [cartItemQuantity]);
 
   return (
     <>
@@ -82,8 +133,12 @@ export const SearchHeader: FC<ISearchHeader> = ({
             <ImSearch size="40px" />
             <Input placeholder="pesquisar" onChange={userInputTypeHandler} />
           </InputContanier>
-          <PokemonCenterButton onClick={buttonFunction}>
+          <PokemonCenterButton
+            onClick={buttonFunction}
+            countAnimation={countAnimation}
+          >
             <img src={PokemonCenterIcon} alt="pokemon-center" />
+            {cartItemQuantity > 0 && <strong>{cartItemQuantity}</strong>}
           </PokemonCenterButton>
         </div>
       </Header>

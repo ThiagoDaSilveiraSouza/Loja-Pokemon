@@ -7,10 +7,15 @@ import { SearchHeader, CardContainer, Cart, FinishModal } from "./components";
 // services
 import { getAllPokemon } from "../../services";
 import { IPokemon } from "../../interfaces";
-import { GetCart, AddPokemonToCart, RemovePokemonFromCart, ClearCart } from "../../utils";
+import {
+  GetCart,
+  AddPokemonToCart,
+  RemovePokemonFromCart,
+  ClearCart,
+} from "../../utils";
 
 // img
-import pokeball from "../../assets/img/pokeball.png"
+import pokeball from "../../assets/img/pokeball.png";
 
 const rotate = keyframes`
   from {
@@ -29,29 +34,43 @@ const LoadingContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  img{
+  img {
     display: inline-block;
     animation: ${rotate} 2s linear infinite;
-    width: 200px;   
+    width: 200px;
   }
-  h3{
+  h3 {
     font-size: 40px;
   }
-`
+`;
 
 export const Home = () => {
   const [cart, setCart] = useState<IPokemon[]>([]);
   const [cartIsOpen, setCartIsOpen] = useState<boolean>(false);
   const [allPokemon, setAllPokemon] = useState<IPokemon[]>([]);
-  const isLoading = useMemo(() => allPokemon.length < 151, [allPokemon])
+  const isLoading = useMemo(() => allPokemon.length < 151, [allPokemon]);
   const [userInputValue, setUserInputValue] = useState<string>("");
-  const [finishModalIsOpen, setFinishModalIsOpen] = useState<boolean>(false)
-  const allPokemonFilteredByInput = allPokemon.filter((pokemon) => pokemon.name.includes(userInputValue))
+  const [finishModalIsOpen, setFinishModalIsOpen] = useState<boolean>(false);
+  const allPokemonFilteredByInput = useMemo(
+    () => allPokemon.filter((pokemon) => pokemon.name.includes(userInputValue)),
+    [allPokemon]
+  );
+  const cartItemQuantity = useMemo(
+    () =>
+      cart.reduce(
+        (cartItemQuantity, currentProduct) =>
+          currentProduct?.quantity
+            ? cartItemQuantity + currentProduct?.quantity
+            : cartItemQuantity,
+        0
+      ),
+    [cart]
+  );
 
   const updateAllPokemon = useCallback(async () => {
     const caughtAllPokemon = await getAllPokemon();
     setAllPokemon(caughtAllPokemon);
-  }, [setAllPokemon])
+  }, [setAllPokemon]);
 
   const searchFunction = (inputValue: string) => {
     setUserInputValue(inputValue);
@@ -60,17 +79,17 @@ export const Home = () => {
   const addPokemonToCartFunction = (pokemon: IPokemon) => {
     AddPokemonToCart(pokemon, setCart);
     setCartIsOpen(true);
-  }
+  };
 
   const removePokemonToCartFunction = (pokemon: IPokemon) => {
     RemovePokemonFromCart(pokemon, setCart);
     setCartIsOpen(true);
-  }
+  };
   const createTeamButtonFunction = () => {
-    setFinishModalIsOpen(true)
-    setCartIsOpen(false)
-    ClearCart(setCart)
-  }
+    setFinishModalIsOpen(true);
+    setCartIsOpen(false);
+    ClearCart(setCart);
+  };
   useEffect(() => {
     updateAllPokemon();
   }, [updateAllPokemon]);
@@ -79,32 +98,34 @@ export const Home = () => {
     GetCart(setCart);
   }, []);
 
-
   return (
     <>
-      {
-        isLoading ?
-          (<LoadingContainer>
-            <img src={pokeball} alt="pokeball-loading" />
-            <h1>Loading...</h1>
-          </LoadingContainer>)
-          :
-          (<div>
-            <SearchHeader searchFunction={searchFunction} buttonFunction={() => setCartIsOpen(true)} />
-            <CardContainer
-              allPokemon={allPokemonFilteredByInput}
-              addToCartFunction={addPokemonToCartFunction}
-            />
-            <Cart
-              addPokemon={addPokemonToCartFunction}
-              removePokemon={removePokemonToCartFunction}
-              useCart={{ cartIsOpen, setCartIsOpen }}
-              pokemonCartList={cart}
-              createTeamButtonFunction={createTeamButtonFunction}
-            />
-            <FinishModal useModal={{ finishModalIsOpen, setFinishModalIsOpen }} />
-          </div>)
-      }
+      {isLoading ? (
+        <LoadingContainer>
+          <img src={pokeball} alt="pokeball-loading" />
+          <h1>Loading...</h1>
+        </LoadingContainer>
+      ) : (
+        <div>
+          <SearchHeader
+            searchFunction={searchFunction}
+            buttonFunction={() => setCartIsOpen(true)}
+            cartItemQuantity={cartItemQuantity}
+          />
+          <CardContainer
+            allPokemon={allPokemonFilteredByInput}
+            addToCartFunction={addPokemonToCartFunction}
+          />
+          <Cart
+            addPokemon={addPokemonToCartFunction}
+            removePokemon={removePokemonToCartFunction}
+            useCart={{ cartIsOpen, setCartIsOpen }}
+            pokemonCartList={cart}
+            createTeamButtonFunction={createTeamButtonFunction}
+          />
+          <FinishModal useModal={{ finishModalIsOpen, setFinishModalIsOpen }} />
+        </div>
+      )}
     </>
   );
 };
