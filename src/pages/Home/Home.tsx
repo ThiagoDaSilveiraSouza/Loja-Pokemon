@@ -51,9 +51,8 @@ export const Home = () => {
   const isLoading = useMemo(() => allPokemon.length < 151, [allPokemon]);
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [finishModalIsOpen, setFinishModalIsOpen] = useState<boolean>(false);
-  const allPokemonFilteredByInput = useMemo(
-    () => allPokemon.filter((pokemon) => pokemon.name.includes(userInputValue)),
-    [allPokemon]
+  const allPokemonFilteredByInput = allPokemon.filter((pokemon) =>
+    pokemon.name.includes(userInputValue)
   );
   const cartItemQuantity = useMemo(
     () =>
@@ -78,7 +77,6 @@ export const Home = () => {
 
   const addPokemonToCartFunction = (pokemon: IPokemon) => {
     AddPokemonToCart(pokemon, setCart);
-    setCartIsOpen(true);
   };
 
   const removePokemonToCartFunction = (pokemon: IPokemon) => {

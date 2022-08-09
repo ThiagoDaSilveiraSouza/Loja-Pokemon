@@ -37,21 +37,21 @@ const CartCard = styled.div<ICartContainer>`
   transform: ${({ cartIsOpen }) =>
     cartIsOpen ? "translateX(0)" : "translateX(100%)"};
   transition: 0.3s;
-  `;
+`;
 
 const PokemonCartListContainer = styled.div`
   flex: 1 1 80%;
   width: 100%;
   overflow-y: auto;
   border-bottom: 1px solid black;
-`
+`;
 
 const CheckoutContainer = styled.div`
   flex: 1 1 20%;
-  button{
+  button {
     font-size: 30px;
   }
-`
+`;
 
 interface ICart {
   useCart: {
@@ -61,7 +61,7 @@ interface ICart {
   pokemonCartList: IPokemon[];
   addPokemon: (pokemon: IPokemon) => void;
   removePokemon: (pokemon: IPokemon) => void;
-  createTeamButtonFunction: () => void
+  createTeamButtonFunction: () => void;
 }
 
 export const Cart: FC<ICart> = ({
@@ -69,16 +69,21 @@ export const Cart: FC<ICart> = ({
   pokemonCartList,
   addPokemon,
   removePokemon,
-  createTeamButtonFunction
+  createTeamButtonFunction,
 }) => {
   const { cartIsOpen, setCartIsOpen } = useCart;
-  const cartTotalXp = useMemo(() => pokemonCartList.reduce<number>((totalXp, currenPokemon) => {
-    if (currenPokemon?.quantity) {
-      const total = totalXp + (currenPokemon.base_experience * currenPokemon.quantity)
-      return total
-    }
-    return 0
-  }, 0), [pokemonCartList])
+  const cartTotalXp = useMemo(
+    () =>
+      pokemonCartList.reduce<number>((totalXp, currenPokemon) => {
+        if (currenPokemon?.quantity) {
+          const total =
+            totalXp + currenPokemon.base_experience * currenPokemon.quantity;
+          return total;
+        }
+        return 0;
+      }, 0),
+    [pokemonCartList]
+  );
 
   const closeCart = () => {
     setCartIsOpen(false);
@@ -101,7 +106,12 @@ export const Cart: FC<ICart> = ({
         </PokemonCartListContainer>
         <CheckoutContainer>
           <h2>Total XP: {cartTotalXp}</h2>
-          <button onClick={createTeamButtonFunction}>Create team</button>
+          <button
+            onClick={createTeamButtonFunction}
+            disabled={cartTotalXp <= 0}
+          >
+            Create team
+          </button>
         </CheckoutContainer>
       </CartCard>
     </CartContainer>

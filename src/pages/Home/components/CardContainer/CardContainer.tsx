@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 
 // interfaces
@@ -35,7 +35,7 @@ interface ICardContainer {
 
 export const CardContainer: FC<ICardContainer> = ({
   allPokemon,
-  addToCartFunction
+  addToCartFunction,
 }) => {
   return (
     <Section>
