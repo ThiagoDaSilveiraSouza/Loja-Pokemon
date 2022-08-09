@@ -21,6 +21,7 @@ const Header = styled.header`
     display: flex;
     height: 100%;
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
@@ -30,6 +31,11 @@ const InputContanier = styled.div`
   align-items: center;
   gap: 10px;
   height: 100%;
+  svg {
+    @media (max-width: 650px) {
+      width: 20px;
+    }
+  }
 `;
 
 const Input = styled.input`
@@ -41,6 +47,12 @@ const Input = styled.input`
   outline: none;
   ::placeholder {
     color: black;
+  }
+  @media (max-width: 650px) {
+    font-size: 20px;
+  }
+  @media (max-width: 335px) {
+    max-width: 180px;
   }
 `;
 
@@ -63,11 +75,17 @@ const nodding = keyframes`
 const PokemonCenterButton = styled.button<IPokemonCenterButton>`
   position: relative;
   display: flex;
-  padding: 10px;
   border: none;
   outline: none;
   background: transparent;
   cursor: pointer;
+  height: 60px;
+  width: 60px;
+
+  @media (max-width: 650px) {
+    height: 40px;
+    width: 40px;
+  }
   img {
     height: 100%;
     border-radius: 100%;
@@ -93,6 +111,12 @@ const PokemonCenterButton = styled.button<IPokemonCenterButton>`
       countAnimation ? "nodding" : "none"}; */
     animation: ${({ countAnimation }) => (countAnimation ? nodding : "none")}
       0.3s linear;
+
+    @media (max-width: 650px) {
+      height: 20px;
+      width: 20px;
+      font-size: 12px;
+    }
   }
 `;
 

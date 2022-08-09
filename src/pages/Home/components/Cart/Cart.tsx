@@ -31,6 +31,7 @@ const CartCard = styled.div<ICartContainer>`
   display: flex;
   flex-direction: column;
   width: 300px;
+  max-width: 100%;
   height: 100%;
   box-sizing: border-box;
   background: white;

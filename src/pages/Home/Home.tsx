@@ -62,7 +62,7 @@ export const Home = () => {
             ? cartItemQuantity + currentProduct?.quantity
             : cartItemQuantity,
         0
-      ),
+      ), 
     [cart]
   );
 
