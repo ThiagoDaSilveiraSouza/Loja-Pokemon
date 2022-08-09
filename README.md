@@ -17,6 +17,6 @@ Decidi optar por focar na implementação nas funcionalidades, estrutura de proj
 
 ## Observações gerais:
 
-- Pensei na possibilidade de implementação de um contexto para gerenciar o estado da lista de pokemón, mas como se tratava de uma aplicação pequena entendi que poderia ser um excesso ainda mais levando em consideração que construí a aplicação somente nos últimos 2 dias de prazo, diminuindo ainda meu tempo para isso;
+- Pensei na possibilidade de implementação de um contexto para gerenciar o estado da lista de pokemón, mas como se tratava de uma aplicação pequena entendi que poderia ser um excesso;
 
 - O carrinho esta sendo salvo também no localstorage, para que quando carregarmos a página novamente não percamos os dados da ultima navegação;
