@@ -40,6 +40,35 @@ const CartCard = styled.div<ICartContainer>`
   transition: 0.3s;
 `;
 
+const CartCardCloseButton = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  ::before,
+  ::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: black;
+  }
+  ::before {
+    transform: rotate(-45deg);
+  }
+  ::after {
+    transform: rotate(45deg);
+  }
+
+  @media (min-width: 650px) {
+    display: none;
+  }
+`;
+
 const PokemonCartListContainer = styled.div`
   flex: 1 1 80%;
   width: 100%;
@@ -94,6 +123,7 @@ export const Cart: FC<ICart> = ({
     <CartContainer cartIsOpen={cartIsOpen}>
       <CartBg onClick={closeCart} />
       <CartCard cartIsOpen={cartIsOpen}>
+        <CartCardCloseButton onClick={closeCart} />
         <h2>Cart</h2>
         <PokemonCartListContainer>
           {pokemonCartList.map((pokemon) => (
