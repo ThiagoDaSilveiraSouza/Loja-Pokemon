@@ -44,7 +44,28 @@ interface IStats {
 
 interface IType {
   slot: number;
-  type: IDefaultUrl;
+  type: {
+    name:
+      | "normal"
+      | "fire"
+      | "water"
+      | "electric"
+      | "grass"
+      | "ice"
+      | "fighting"
+      | "poison"
+      | "ground"
+      | "flying"
+      | "psychic"
+      | "bug"
+      | "rock"
+      | "ghost"
+      | "dragon"
+      | "dark"
+      | "steel"
+      | "fairy";
+    url: string;
+  };
 }
 
 export interface IPokemon {

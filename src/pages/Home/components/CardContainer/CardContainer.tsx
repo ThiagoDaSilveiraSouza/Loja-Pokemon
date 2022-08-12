@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 
 // interfaces
 import { IPokemon } from "../../../../interfaces";
 
 // CardContainer components
-import { Card } from "./components";
+import { Card, ModalDescription } from "./components";
 
 const Section = styled.div`
   padding: 30px 0;
@@ -37,6 +37,14 @@ export const CardContainer: FC<ICardContainer> = ({
   allPokemon,
   addToCartFunction,
 }) => {
+  const [modalDescriptionIsShow, setModalDescriptionIsShow] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<IPokemon | null>(null);
+
+  const imageClickFunction = (pokemon: IPokemon) => {
+    setSelectedPokemon(pokemon);
+    setModalDescriptionIsShow(true);
+  };
+
   return (
     <Section>
       <div className="centralizer">
@@ -45,9 +53,20 @@ export const CardContainer: FC<ICardContainer> = ({
             key={pokemon.name}
             pokemon={pokemon}
             buttonFunction={() => addToCartFunction(pokemon)}
+            imageClickFunction={() => imageClickFunction(pokemon)}
           />
         ))}
       </div>
+      <ModalDescription
+        useModalDescriptionIsShow={{
+          modalDescriptionIsShow,
+          setModalDescriptionIsShow,
+        }}
+        useSelectedPokemon={{ selectedPokemon, setSelectedPokemon }}
+        addPokemonToCart={() =>
+          selectedPokemon && addToCartFunction(selectedPokemon)
+        }
+      />
     </Section>
   );
 };

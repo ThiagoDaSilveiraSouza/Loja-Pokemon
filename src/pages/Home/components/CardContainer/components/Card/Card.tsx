@@ -16,6 +16,11 @@ const CardContainer = styled.div`
   img {
     flex: 1 1 100%;
     object-fit: contain;
+    transition: 0.3s;
+    cursor: pointer;
+    :hover {
+      transform: scale(1.3);
+    }
   }
   h3 {
     flex: 1 1 100%;
@@ -37,13 +42,22 @@ const ExperienceContainer = styled.div`
 interface ICard {
   pokemon: IPokemon;
   buttonFunction?: () => void;
+  imageClickFunction?: () => void;
 }
 
-export const Card: FC<ICard> = ({ pokemon, buttonFunction }) => {
+export const Card: FC<ICard> = ({
+  pokemon,
+  buttonFunction,
+  imageClickFunction,
+}) => {
   return (
     <CardContainer>
       {pokemon.sprites.front_default && (
-        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <img
+          src={pokemon.sprites.front_default}
+          alt={pokemon.name}
+          onClick={imageClickFunction}
+        />
       )}
       <h3>{pokemon.name}</h3>
       <ExperienceContainer>
