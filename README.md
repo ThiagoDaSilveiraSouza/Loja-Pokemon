@@ -11,7 +11,8 @@ Decidi optar por focar na implementação nas funcionalidades, estrutura de proj
 
 - Home (Single page application)
   - Filtro da lista de Pokemón;
-  - Lista de Pokemón;
+  - Lista de Pokémon;
+  - Modal de descrição de Pokémon;
   - Carrinho;
   - Modal de finalização de compra;
 
