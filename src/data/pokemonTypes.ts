@@ -1,4 +1,4 @@
-export const types = {
+export const pokemonTypes = {
   normal: {
     color: "#A8A77A",
   },

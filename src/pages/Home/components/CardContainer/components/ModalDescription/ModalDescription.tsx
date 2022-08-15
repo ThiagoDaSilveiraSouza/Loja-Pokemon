@@ -4,7 +4,7 @@ import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { IPokemon } from "../../../../../../interfaces";
 
 // data
-import { types } from "../../../../../../data";
+import { pokemonTypes } from "../../../../../../data";
 
 // components
 import { Modal } from "../../../../../../components";
@@ -147,7 +147,7 @@ export const ModalDescription: FC<IModalDescription> = ({
                   const typeName = type.name;
                   return (
                     <TypeSquad
-                      color={types[typeName].color}
+                      color={pokemonTypes[typeName].color}
                       key={typeName + "-type"}
                     >
                       <strong>{typeName}</strong>
